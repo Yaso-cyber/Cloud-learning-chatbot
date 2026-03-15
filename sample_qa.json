@@ -1,0 +1,34 @@
+[
+  {
+    "question": "What is cloud computing?",
+    "answer": "Cloud computing is the delivery of computing services—including servers, storage, databases, networking, software, analytics, and intelligence—over the internet to offer faster innovation, flexible resources, and economies of scale."
+  },
+  {
+    "question": "What are the three main cloud service models?",
+    "answer": "The three main cloud service models are: 1) IaaS (Infrastructure as a Service) — provides virtualized hardware resources; 2) PaaS (Platform as a Service) — provides a managed platform for building applications; 3) SaaS (Software as a Service) — provides complete applications over the internet."
+  },
+  {
+    "question": "What is IAM in cloud security?",
+    "answer": "IAM (Identity and Access Management) is a framework for managing digital identities and controlling access to cloud resources. It allows administrators to define who (users, groups, roles) can access what resources (services, data) under what conditions (time, location, MFA)."
+  },
+  {
+    "question": "What is the shared responsibility model?",
+    "answer": "The shared responsibility model divides security responsibilities between the cloud provider and the customer. The provider secures the underlying infrastructure (hardware, software, networking, facilities), while the customer is responsible for securing their data, applications, identity management, and configurations."
+  },
+  {
+    "question": "What is a firewall?",
+    "answer": "A firewall is a network security device (hardware or software) that monitors and controls incoming and outgoing network traffic based on predefined security rules. It creates a barrier between trusted internal networks and untrusted external networks like the internet."
+  },
+  {
+    "question": "What is encryption?",
+    "answer": "Encryption is the process of converting readable data (plaintext) into an unreadable format (ciphertext) using a mathematical algorithm and a key, so only authorized parties with the correct decryption key can read it."
+  },
+  {
+    "question": "What is zero-trust architecture?",
+    "answer": "Zero-trust is a security model based on the principle 'never trust, always verify.' It assumes that threats exist both inside and outside traditional network boundaries and requires strict identity verification for every user and device, regardless of location."
+  },
+  {
+    "question": "What is GRC?",
+    "answer": "GRC stands for Governance, Risk, and Compliance. It is a structured approach that aligns IT and business strategy, manages risk effectively, and ensures the organization meets regulatory and legal requirements."
+  }
+]

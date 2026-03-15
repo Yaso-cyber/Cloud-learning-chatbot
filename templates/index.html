@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudGuide — Cloud Learning Chatbot</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <!-- ───────────────────────── Header ───────────────────────── -->
+  <header class="app-header">
+    <div class="header-inner">
+      <span class="logo" aria-hidden="true">☁️</span>
+      <div>
+        <h1 class="app-title">CloudGuide</h1>
+        <p class="app-subtitle">Your beginner-friendly AI assistant for Cloud, Cloud Security &amp; GRC</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ───────────────────────── Navigation tabs ───────────────── -->
+  <nav class="nav-tabs" role="tablist" aria-label="Feature navigation">
+    <button class="nav-tab active" data-panel="panel-chat" role="tab">💬 Chat</button>
+    <button class="nav-tab" data-panel="panel-quiz" role="tab">🧠 Quiz</button>
+    <button class="nav-tab" data-panel="panel-notes" role="tab">📝 Notes</button>
+    <button class="nav-tab" data-panel="panel-upload" role="tab">📄 PDF Summary</button>
+    <button class="nav-tab" data-panel="panel-plan" role="tab">📅 Learning Plan</button>
+  </nav>
+
+  <!-- ═══════════════════════ CHAT PANEL ═══════════════════════ -->
+  <section id="panel-chat" class="panel active" role="tabpanel" aria-label="Chat">
+    <!-- Topic pills -->
+    <div class="topic-bar" role="navigation" aria-label="Quick topic starters">
+      <button class="topic-pill" data-prompt="What is cloud computing and why does it matter?">☁️ Cloud Basics</button>
+      <button class="topic-pill" data-prompt="How does the shared responsibility model work in cloud security?">🔐 Cloud Security</button>
+      <button class="topic-pill" data-prompt="Can you explain GRC and how it applies to cloud environments?">📋 GRC</button>
+      <button class="topic-pill" data-prompt="What are the main differences between AWS, Azure, and Google Cloud?">⚖️ AWS vs Azure vs GCP</button>
+      <button class="topic-pill" data-prompt="What is IAM and why is it important in cloud security?">🔑 IAM</button>
+      <button class="topic-pill" data-prompt="What frameworks are commonly used for cloud compliance, like NIST or ISO 27001?">📑 Compliance Frameworks</button>
+    </div>
+
+    <!-- Chat messages -->
+    <main id="chat-container" aria-live="polite" aria-label="Chat messages"></main>
+  </section>
+
+  <!-- ═══════════════════════ QUIZ PANEL ═══════════════════════ -->
+  <section id="panel-quiz" class="panel" role="tabpanel" aria-label="Quiz">
+    <!-- Setup screen -->
+    <div id="quiz-setup" class="quiz-setup">
+      <h2>🧠 Knowledge Quiz</h2>
+      <p>Test your knowledge on Cloud, Security, Networking, Cryptography, and GRC.</p>
+      <div id="category-grid" class="category-grid"></div>
+      <button id="start-quiz-btn" class="start-quiz-btn" disabled>Start Quiz ▶</button>
+    </div>
+
+    <!-- Question screen -->
+    <div id="quiz-question" class="quiz-question" style="display:none">
+      <div class="quiz-progress" id="quiz-progress">Question 1 of 10</div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <h3 id="question-text"></h3>
+      <div id="quiz-options" class="quiz-options"></div>
+      <div id="quiz-feedback" class="quiz-feedback"></div>
+      <button id="next-btn" class="next-btn" style="display:none">Next →</button>
+    </div>
+
+    <!-- Result screen -->
+    <div id="quiz-result" class="quiz-result" style="display:none">
+      <h2>🎉 Quiz Complete!</h2>
+      <div class="score-circle">
+        <span id="result-score">0</span>/<span id="result-total">0</span>
+        <small id="result-pct">0%</small>
+      </div>
+      <button id="new-quiz-btn" class="new-quiz-btn">🔄 New Quiz</button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ NOTES PANEL ═════════════════════ -->
+  <section id="panel-notes" class="panel" role="tabpanel" aria-label="Notes">
+    <div class="notes-header">
+      <h2>📝 My Notes</h2>
+      <button id="add-note-btn" class="add-note-btn">+ Add Note</button>
+    </div>
+
+    <!-- Note form (hidden by default) -->
+    <div id="note-form" class="note-form">
+      <input id="note-topic" type="text" placeholder="Topic (e.g. Networking, IAM, GRC…)" maxlength="100" />
+      <textarea id="note-content" placeholder="Write your note here…" maxlength="5000"></textarea>
+      <div class="note-form-btns">
+        <button id="save-note-btn" class="save-note-btn">💾 Save</button>
+        <button id="cancel-note-btn" class="cancel-note-btn">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="notes-filter">
+      <input id="topic-filter" type="text" placeholder="Filter by topic…" />
+      <button id="filter-btn" class="filter-btn">🔍 Filter</button>
+      <button id="clear-filter" class="filter-btn">✕ Clear</button>
+    </div>
+
+    <!-- Notes list -->
+    <div id="notes-list" class="notes-list">
+      <p style="color:var(--clr-muted);font-size:.9rem;">Loading notes…</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ UPLOAD PANEL ════════════════════ -->
+  <section id="panel-upload" class="panel" role="tabpanel" aria-label="PDF Summary">
+    <div class="upload-box">
+      <h2>📄 PDF Summariser</h2>
+      <p>Upload a PDF (study guide, whitepaper, documentation) and get an AI-generated summary.</p>
+
+      <div id="upload-drop-zone" class="upload-drop-zone" role="button" tabindex="0"
+           aria-label="Click or drag a PDF file here">
+        <span class="upload-icon">📂</span>
+        <div>
+          <span class="drop-label">Drag &amp; drop a PDF here, or <label for="pdf-file-input">browse</label></span>
+          <input id="pdf-file-input" type="file" accept=".pdf" aria-label="PDF file input" />
+        </div>
+      </div>
+
+      <button id="upload-btn" class="upload-btn" disabled>Summarise 🪄</button>
+      <div id="upload-spinner" class="upload-spinner">⏳ Uploading and summarising… this may take a moment.</div>
+    </div>
+
+    <div id="upload-result" class="upload-result">
+      <h3>📋 Summary: <span id="result-filename"></span></h3>
+      <div id="summary-text" class="summary-text"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ LEARNING PLAN PANEL ═════════════ -->
+  <section id="panel-plan" class="panel" role="tabpanel" aria-label="Learning Plan">
+    <div class="plan-setup">
+      <h2>📅 Weekly Learning Plan</h2>
+      <p>Generate a personalised 7-day plan with at least 5 active learning days.</p>
+      <div class="plan-form">
+        <div>
+          <label for="plan-focus">Topic focus (optional)</label>
+          <input id="plan-focus" type="text" placeholder="e.g. cloud security, GRC…" />
+        </div>
+        <div>
+          <label for="plan-level">Your level</label>
+          <select id="plan-level">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </div>
+        <button id="generate-plan-btn" class="generate-plan-btn">🗓 Generate Plan</button>
+      </div>
+      <div id="plan-loading" class="plan-loading">⏳ Generating your personalised plan…</div>
+    </div>
+
+    <div id="plan-grid" class="plan-grid"></div>
+  </section>
+
+  <!-- ───────────────────────── Input bar (chat only) ─────────── -->
+  <footer class="input-bar" id="input-bar">
+    <form class="input-form" id="input-form" autocomplete="off">
+      <label for="user-input" class="sr-only">Your message</label>
+      <textarea
+        id="user-input"
+        class="user-input"
+        placeholder="Ask me anything about Cloud, Cloud Security, or GRC…"
+        rows="1"
+        maxlength="2000"
+        aria-label="Your message"
+      ></textarea>
+      <button type="submit" class="send-btn" id="send-btn" aria-label="Send message">
+        <span aria-hidden="true">➤</span>
+      </button>
+    </form>
+    <div style="max-width:960px;margin:.3rem auto 0;display:flex;align-items:center;gap:.5rem;padding:0 .25rem;">
+      <label style="font-size:.8rem;color:var(--clr-muted);display:flex;align-items:center;gap:.3rem;cursor:pointer;">
+        <input type="checkbox" id="analogy-toggle" style="width:auto;" />
+        🔀 Analogy mode (beginner-friendly explanations)
+      </label>
+    </div>
+    <p class="disclaimer">
+      AI can make mistakes — always verify important information with official documentation.
+    </p>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
