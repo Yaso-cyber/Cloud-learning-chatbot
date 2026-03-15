@@ -2,7 +2,7 @@
 Cloud Learning Chatbot — Flask backend.
 
 Provides a chat UI and REST API endpoints for:
-  - /chat          : Q&A via OpenAI GPT
+  - /chat          : Q&A via AI (Google Gemini / OpenAI-compatible)
   - /explain       : Analogy-based explanations
   - /quiz/*        : Quiz with categories and score tracking
   - /notes/*       : CRUD notes management (SQLite)

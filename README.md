@@ -11,7 +11,7 @@ and personalised weekly learning plans.
 
 | Feature | Details |
 |---|---|
-| **Chat Q&A** | GPT-powered answers focused on Cloud, Cloud Security, and GRC |
+| **Chat Q&A** | AI-powered answers focused on Cloud, Cloud Security, and GRC |
 | **Analogy mode** | Toggle to receive beginner-friendly analogies for complex topics |
 | **Knowledge Quiz** | 5 categories (Networking, Cybersecurity, Cryptography, Cloud Computing, GRC) — random or targeted |
 | **Score tracking** | Live progress bar and score display during quizzes |
@@ -52,7 +52,8 @@ Cloud-learning-chatbot/
 ### 1. Prerequisites
 
 - Python 3.9 or higher
-- An [OpenAI API key](https://platform.openai.com/api-keys)
+- A free **Google Gemini API key** from [Google AI Studio](https://aistudio.google.com) *(recommended — free tier)*
+- Or an [OpenAI API key](https://platform.openai.com/api-keys) if you prefer
 
 ### 2. Clone & install
 
@@ -68,8 +69,17 @@ pip install -r requirements.txt
 
 ```bash
 cp .env.example .env
-# Open .env and replace "your_openai_api_key_here" with your real key
 ```
+
+Open `.env` and set your key. **Recommended — free Google Gemini key:**
+
+```env
+OPENAI_API_KEY=your_google_ai_studio_key
+OPENAI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+OPENAI_MODEL=gemini-1.5-flash
+```
+
+Get a free key at https://aistudio.google.com → **Get API key**
 
 ### 4. Run the app
 
@@ -87,21 +97,21 @@ All configuration is done via environment variables in `.env`:
 
 | Variable | Default | Description |
 |---|---|---|
-| `OPENAI_API_KEY` | *(required)* | Your OpenAI API key |
-| `OPENAI_MODEL` | `gpt-4o-mini` | Model to use (e.g. `gpt-4o`, `gpt-3.5-turbo`) |
+| `OPENAI_API_KEY` | *(required)* | Your API key — Google AI Studio or OpenAI |
+| `OPENAI_MODEL` | `gemini-1.5-flash` | Model to use. Google: `gemini-1.5-flash`, OpenAI: `gpt-4o-mini` |
 | `OPENAI_BASE_URL` | *(unset)* | Optional OpenAI-compatible endpoint (e.g. Google/Groq) |
 | `SECRET_KEY` | `dev-secret-…` | Flask session secret — change for production |
 | `NOTES_DB_PATH` | `notes.db` | Path for the SQLite notes database |
 | `FLASK_DEBUG` | `0` | Set to `1` to enable debug mode (local dev only) |
 
-### Use Google Gemini API Key (Optional)
+### Google Gemini API Key (free tier — recommended)
 
-If you want to use a Google Gemini key instead of OpenAI:
+Get a free key at https://aistudio.google.com → **Get API key**, then set:
 
 ```env
 OPENAI_API_KEY=your_google_ai_studio_key
 OPENAI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
-OPENAI_MODEL=gemini-2.0-flash
+OPENAI_MODEL=gemini-1.5-flash
 ```
 
 Then restart the app (or redeploy on Render).
