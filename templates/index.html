@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudGuide — Cloud Learning Chatbot</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <!-- ───────────────────────── Header ───────────────────────── -->
+  <header class="app-header">
+    <div class="header-inner">
+      <span class="logo" aria-hidden="true">☁️</span>
+      <div>
+        <h1 class="app-title">CloudGuide</h1>
+        <p class="app-subtitle">Your beginner-friendly AI assistant for Cloud, Cloud Security &amp; GRC</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ───────────────────────── Topic Pills ───────────────────── -->
+  <div class="topic-bar" role="navigation" aria-label="Quick topic starters">
+    <button class="topic-pill" data-prompt="What is cloud computing and why does it matter?">☁️ Cloud Basics</button>
+    <button class="topic-pill" data-prompt="How does the shared responsibility model work in cloud security?">🔐 Cloud Security</button>
+    <button class="topic-pill" data-prompt="Can you explain GRC and how it applies to cloud environments?">📋 GRC</button>
+    <button class="topic-pill" data-prompt="What are the main differences between AWS, Azure, and Google Cloud?">⚖️ AWS vs Azure vs GCP</button>
+    <button class="topic-pill" data-prompt="What is IAM and why is it important in cloud security?">🔑 IAM</button>
+    <button class="topic-pill" data-prompt="What frameworks are commonly used for cloud compliance, like NIST or ISO 27001?">📑 Compliance Frameworks</button>
+  </div>
+
+  <!-- ───────────────────────── Chat window ───────────────────── -->
+  <main class="chat-container" id="chat-container" aria-live="polite" aria-label="Chat messages">
+    <!-- Starter message injected by JS -->
+  </main>
+
+  <!-- ───────────────────────── Input bar ─────────────────────── -->
+  <footer class="input-bar">
+    <form class="input-form" id="input-form" autocomplete="off">
+      <label for="user-input" class="sr-only">Your message</label>
+      <textarea
+        id="user-input"
+        class="user-input"
+        placeholder="Ask me anything about Cloud, Cloud Security, or GRC…"
+        rows="1"
+        maxlength="2000"
+        aria-label="Your message"
+      ></textarea>
+      <button type="submit" class="send-btn" id="send-btn" aria-label="Send message">
+        <span aria-hidden="true">➤</span>
+      </button>
+    </form>
+    <p class="disclaimer">
+      AI can make mistakes — always verify important information with official documentation.
+    </p>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
