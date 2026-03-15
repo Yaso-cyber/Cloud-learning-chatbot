@@ -31,7 +31,8 @@ app.secret_key = os.getenv("SECRET_KEY", "dev-secret-change-in-production")
 # OpenAI client — instantiated once at startup
 # ---------------------------------------------------------------------------
 _api_key = os.getenv("OPENAI_API_KEY", "")
-client = OpenAI(api_key=_api_key) if _api_key else None
+_base_url = os.getenv("OPENAI_BASE_URL", "").strip() or None
+client = OpenAI(api_key=_api_key, base_url=_base_url) if _api_key else None
 
 MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 

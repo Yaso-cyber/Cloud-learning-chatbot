@@ -89,9 +89,22 @@ All configuration is done via environment variables in `.env`:
 |---|---|---|
 | `OPENAI_API_KEY` | *(required)* | Your OpenAI API key |
 | `OPENAI_MODEL` | `gpt-4o-mini` | Model to use (e.g. `gpt-4o`, `gpt-3.5-turbo`) |
+| `OPENAI_BASE_URL` | *(unset)* | Optional OpenAI-compatible endpoint (e.g. Google/Groq) |
 | `SECRET_KEY` | `dev-secret-…` | Flask session secret — change for production |
 | `NOTES_DB_PATH` | `notes.db` | Path for the SQLite notes database |
 | `FLASK_DEBUG` | `0` | Set to `1` to enable debug mode (local dev only) |
+
+### Use Google Gemini API Key (Optional)
+
+If you want to use a Google Gemini key instead of OpenAI:
+
+```env
+OPENAI_API_KEY=your_google_ai_studio_key
+OPENAI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+OPENAI_MODEL=gemini-2.0-flash
+```
+
+Then restart the app (or redeploy on Render).
 
 ---
 
