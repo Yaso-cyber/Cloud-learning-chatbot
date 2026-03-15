@@ -300,6 +300,39 @@ docker run -p 5000:5000 -e OPENAI_API_KEY=your_key cloudguide
 
 ---
 
+## ☁️ Deploy to Render
+
+### Option A: Blueprint (recommended)
+
+This repo includes a `render.yaml` file for one-click setup.
+
+1. Push your latest code to GitHub.
+2. In Render, click **New +** → **Blueprint**.
+3. Select this GitHub repository.
+4. When prompted for environment values, set:
+  - `OPENAI_API_KEY` = your real key
+  - `OPENAI_MODEL` = `gpt-4o-mini` (or your preferred model)
+  - `FLASK_DEBUG` = `0`
+5. Deploy and open your public Render URL.
+
+### Option B: Manual Web Service
+
+1. In Render, click **New +** → **Web Service**.
+2. Connect this repository.
+3. Set:
+  - **Runtime**: Python
+  - **Build Command**: `pip install -r requirements.txt`
+  - **Start Command**: `gunicorn app:app`
+  - **Health Check Path**: `/health`
+4. Add environment variables:
+  - `OPENAI_API_KEY` = your real key
+  - `OPENAI_MODEL` = `gpt-4o-mini`
+  - `SECRET_KEY` = any long random string
+  - `FLASK_DEBUG` = `0`
+5. Deploy and share the Render URL (not localhost).
+
+---
+
 ## ☁️ Deploy to Heroku
 
 ```bash

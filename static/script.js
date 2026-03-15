@@ -101,8 +101,17 @@
 
   function renderMarkdown(text) {
     const el = document.createElement("span");
-    const parts = text.split(/(\*\*[^*]+?\*\*|\*[^*]+?\*|`[^`]+?`)/g);
+    const parts = text.split(/(\[[^\]]+\]\((?:https?:\/\/|mailto:)[^)]+\)|\*\*[^*]+?\*\*|\*[^*]+?\*|`[^`]+?`)/g);
     parts.forEach((part) => {
+      const linkMatch = part.match(/^\[([^\]]+)\]\(((?:https?:\/\/|mailto:)[^)]+)\)$/);
+      if (linkMatch) {
+        const a = document.createElement("a");
+        a.textContent = linkMatch[1];
+        a.href = linkMatch[2];
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        el.appendChild(a);
+      } else
       if (part.startsWith("**") && part.endsWith("**")) {
         const b = document.createElement("strong");
         b.textContent = part.slice(2, -2);
