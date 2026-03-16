@@ -336,7 +336,7 @@ This repo includes a `render.yaml` file for one-click setup.
 3. Select this GitHub repository.
 4. When prompted for environment values, set:
   - `OPENAI_API_KEY` = your real key
-  - `OPENAI_MODEL` = `gpt-4o-mini` (or your preferred model)
+  - `OPENAI_MODEL` = `gemini-1.5-flash` (to match \`render.yaml\`, or your preferred compatible model)
   - `FLASK_DEBUG` = `0`
 5. Deploy and open your public Render URL.
 
@@ -351,7 +351,7 @@ This repo includes a `render.yaml` file for one-click setup.
   - **Health Check Path**: `/health`
 4. Add environment variables:
   - `OPENAI_API_KEY` = your real key
-  - `OPENAI_MODEL` = `gpt-4o-mini`
+  - `OPENAI_MODEL` = `gemini-1.5-flash`
   - `SECRET_KEY` = any long random string
   - `FLASK_DEBUG` = `0`
 5. Deploy and share the Render URL (not localhost).
