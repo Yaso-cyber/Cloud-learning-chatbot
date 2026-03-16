@@ -2,7 +2,7 @@
 Cloud Learning Chatbot — Flask backend.
 
 Provides a chat UI and REST API endpoints for:
-  - /chat          : Q&A via OpenAI GPT
+  - /chat          : Q&A via AI (Google Gemini / OpenAI-compatible)
   - /explain       : Analogy-based explanations
   - /quiz/*        : Quiz with categories and score tracking
   - /notes/*       : CRUD notes management (SQLite)
@@ -31,7 +31,8 @@ app.secret_key = os.getenv("SECRET_KEY", "dev-secret-change-in-production")
 # OpenAI client — instantiated once at startup
 # ---------------------------------------------------------------------------
 _api_key = os.getenv("OPENAI_API_KEY", "")
-client = OpenAI(api_key=_api_key) if _api_key else None
+_base_url = os.getenv("OPENAI_BASE_URL", "").strip() or None
+client = OpenAI(api_key=_api_key, base_url=_base_url) if _api_key else None
 
 MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 
@@ -129,6 +130,22 @@ def _row_to_dict(row: sqlite3.Row) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# Helper — translate raw API errors into user-friendly messages
+# ---------------------------------------------------------------------------
+
+def _friendly_error(exc: Exception) -> str:
+    msg = str(exc)
+    if "insufficient_quota" in msg or "RESOURCE_EXHAUSTED" in msg or "429" in msg:
+        return ("The AI service has reached its free-tier usage limit for today. "
+                "Please try again tomorrow — limits reset daily.")
+    if "invalid_api_key" in msg or "401" in msg:
+        return "The AI service is not configured correctly. Please contact the site owner."
+    if "404" in msg or "NOT_FOUND" in msg:
+        return "The AI model could not be found. Please contact the site owner."
+    return "The AI service is temporarily unavailable. Please try again in a moment."
+
+
+# ---------------------------------------------------------------------------
 # Routes — UI
 # ---------------------------------------------------------------------------
 
@@ -180,7 +197,7 @@ def chat():
         reply = response.choices[0].message.content
         return jsonify({"reply": reply})
     except Exception as exc:  # noqa: BLE001
-        return jsonify({"error": str(exc)}), 500
+        return jsonify({"error": _friendly_error(exc)}), 500
 
 
 # ---------------------------------------------------------------------------
@@ -219,7 +236,7 @@ def explain():
         explanation = response.choices[0].message.content
         return jsonify({"concept": concept, "explanation": explanation})
     except Exception as exc:  # noqa: BLE001
-        return jsonify({"error": str(exc)}), 500
+        return jsonify({"error": _friendly_error(exc)}), 500
 
 
 # ---------------------------------------------------------------------------
@@ -679,8 +696,7 @@ def create_learning_plan():
         # Return raw text wrapped in a simple structure
         plan_data = {"title": "Weekly Cloud Learning Plan", "raw": raw}
     except Exception as exc:  # noqa: BLE001
-        return jsonify({"error": str(exc)}), 500
-
+        return jsonify({"error": _friendly_error(exc)}), 500
     plan_id = str(uuid.uuid4())
     now = datetime.now(timezone.utc).isoformat()
     plan_record = {

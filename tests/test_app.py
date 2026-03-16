@@ -167,4 +167,7 @@ class TestChatErrors:
                            json={"messages": [{"role": "user", "content": "hi"}]})
         assert resp.status_code == 500
         data = resp.get_json()
-        assert "API down" in data["error"]
+        assert data["error"] == (
+            "The AI service is temporarily unavailable. "
+            "Please try again in a moment."
+        )

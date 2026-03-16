@@ -5,13 +5,15 @@ Computing**, **Cloud Security**, and **GRC (Governance, Risk &
 Compliance)** through natural conversation, quizzes, notes, PDF summaries,
 and personalised weekly learning plans.
 
+Live app: https://cloud-learning-chatbot.onrender.com
+
 ---
 
 ## ✨ Features
 
 | Feature | Details |
 |---|---|
-| **Chat Q&A** | GPT-powered answers focused on Cloud, Cloud Security, and GRC |
+| **Chat Q&A** | AI-powered answers focused on Cloud, Cloud Security, and GRC |
 | **Analogy mode** | Toggle to receive beginner-friendly analogies for complex topics |
 | **Knowledge Quiz** | 5 categories (Networking, Cybersecurity, Cryptography, Cloud Computing, GRC) — random or targeted |
 | **Score tracking** | Live progress bar and score display during quizzes |
@@ -52,7 +54,8 @@ Cloud-learning-chatbot/
 ### 1. Prerequisites
 
 - Python 3.9 or higher
-- An [OpenAI API key](https://platform.openai.com/api-keys)
+- A free **Google Gemini API key** from [Google AI Studio](https://aistudio.google.com) *(recommended — free tier)*
+- Or an [OpenAI API key](https://platform.openai.com/api-keys) if you prefer
 
 ### 2. Clone & install
 
@@ -68,8 +71,17 @@ pip install -r requirements.txt
 
 ```bash
 cp .env.example .env
-# Open .env and replace "your_openai_api_key_here" with your real key
 ```
+
+Open `.env` and set your key. **Recommended — free Google Gemini key:**
+
+```env
+OPENAI_API_KEY=your_google_ai_studio_key
+OPENAI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+OPENAI_MODEL=gemini-1.5-flash
+```
+
+Get a free key at https://aistudio.google.com → **Get API key**
 
 ### 4. Run the app
 
@@ -87,11 +99,24 @@ All configuration is done via environment variables in `.env`:
 
 | Variable | Default | Description |
 |---|---|---|
-| `OPENAI_API_KEY` | *(required)* | Your OpenAI API key |
-| `OPENAI_MODEL` | `gpt-4o-mini` | Model to use (e.g. `gpt-4o`, `gpt-3.5-turbo`) |
+| `OPENAI_API_KEY` | *(required)* | Your API key — Google AI Studio or OpenAI |
+| `OPENAI_MODEL` | `gemini-1.5-flash` | Model to use. Google: `gemini-1.5-flash`, OpenAI: `gpt-4o-mini` |
+| `OPENAI_BASE_URL` | *(unset)* | Optional OpenAI-compatible endpoint (e.g. Google/Groq) |
 | `SECRET_KEY` | `dev-secret-…` | Flask session secret — change for production |
 | `NOTES_DB_PATH` | `notes.db` | Path for the SQLite notes database |
 | `FLASK_DEBUG` | `0` | Set to `1` to enable debug mode (local dev only) |
+
+### Google Gemini API Key (free tier — recommended)
+
+Get a free key at https://aistudio.google.com → **Get API key**, then set:
+
+```env
+OPENAI_API_KEY=your_google_ai_studio_key
+OPENAI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+OPENAI_MODEL=gemini-1.5-flash
+```
+
+Then restart the app (or redeploy on Render).
 
 ---
 
@@ -297,6 +322,39 @@ docker build -t cloudguide .
 # Run (set your API key)
 docker run -p 5000:5000 -e OPENAI_API_KEY=your_key cloudguide
 ```
+
+---
+
+## ☁️ Deploy to Render
+
+### Option A: Blueprint (recommended)
+
+This repo includes a `render.yaml` file for one-click setup.
+
+1. Push your latest code to GitHub.
+2. In Render, click **New +** → **Blueprint**.
+3. Select this GitHub repository.
+4. When prompted for environment values, set:
+  - `OPENAI_API_KEY` = your real key
+  - `OPENAI_MODEL` = `gpt-4o-mini` (or your preferred model)
+  - `FLASK_DEBUG` = `0`
+5. Deploy and open your public Render URL.
+
+### Option B: Manual Web Service
+
+1. In Render, click **New +** → **Web Service**.
+2. Connect this repository.
+3. Set:
+  - **Runtime**: Python
+  - **Build Command**: `pip install -r requirements.txt`
+  - **Start Command**: `gunicorn app:app`
+  - **Health Check Path**: `/health`
+4. Add environment variables:
+  - `OPENAI_API_KEY` = your real key
+  - `OPENAI_MODEL` = `gpt-4o-mini`
+  - `SECRET_KEY` = any long random string
+  - `FLASK_DEBUG` = `0`
+5. Deploy and share the Render URL (not localhost).
 
 ---
 
