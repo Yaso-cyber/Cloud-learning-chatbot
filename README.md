@@ -101,6 +101,7 @@ All configuration is done via environment variables in `.env`:
 |---|---|---|
 | `OPENAI_API_KEY` | *(required)* | Your API key — Google AI Studio or OpenAI |
 | `OPENAI_MODEL` | `gpt-4o-mini` | Model to use. Default: `gpt-4o-mini`. For Google: `gemini-1.5-flash` |
+| `OPENAI_MODEL` | `gemini-1.5-flash` | Model to use. Google: `gemini-1.5-flash`, OpenAI: `gpt-4o-mini` |
 | `OPENAI_BASE_URL` | *(unset)* | Optional OpenAI-compatible endpoint (e.g. Google/Groq) |
 | `SECRET_KEY` | `dev-secret-…` | Flask session secret — change for production |
 | `NOTES_DB_PATH` | `notes.db` | Path for the SQLite notes database |
@@ -337,6 +338,7 @@ This repo includes a `render.yaml` file for one-click setup.
 4. When prompted for environment values, set:
   - `OPENAI_API_KEY` = your real key
   - `OPENAI_MODEL` = `gemini-1.5-flash` (to match \`render.yaml\`, or your preferred compatible model)
+  - `OPENAI_MODEL` = `gpt-4o-mini` (or your preferred model)
   - `FLASK_DEBUG` = `0`
 5. Deploy and open your public Render URL.
 
@@ -352,6 +354,7 @@ This repo includes a `render.yaml` file for one-click setup.
 4. Add environment variables:
   - `OPENAI_API_KEY` = your real key
   - `OPENAI_MODEL` = `gemini-1.5-flash`
+  - `OPENAI_MODEL` = `gpt-4o-mini`
   - `SECRET_KEY` = any long random string
   - `FLASK_DEBUG` = `0`
 5. Deploy and share the Render URL (not localhost).

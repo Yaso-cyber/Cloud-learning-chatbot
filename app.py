@@ -138,6 +138,8 @@ def _friendly_error(exc: Exception) -> str:
     if "insufficient_quota" in msg or "RESOURCE_EXHAUSTED" in msg or "429" in msg:
         return ("The AI service has reached its free-tier usage limit for today. "
                 "Please try again tomorrow — limits reset daily.")
+                "Please try again tomorrow — limits reset daily. "
+                "If you are the site owner, check your API quota at https://ai.dev/rate-limit")
     if "invalid_api_key" in msg or "401" in msg:
         return "The AI service is not configured correctly. Please contact the site owner."
     if "404" in msg or "NOT_FOUND" in msg:
