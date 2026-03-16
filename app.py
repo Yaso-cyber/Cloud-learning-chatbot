@@ -137,6 +137,7 @@ def _friendly_error(exc: Exception) -> str:
     msg = str(exc)
     if "insufficient_quota" in msg or "RESOURCE_EXHAUSTED" in msg or "429" in msg:
         return ("The AI service has reached its free-tier usage limit for today. "
+                "Please try again tomorrow — limits reset daily.")
                 "Please try again tomorrow — limits reset daily. "
                 "If you are the site owner, check your API quota at https://ai.dev/rate-limit")
     if "invalid_api_key" in msg or "401" in msg:
@@ -698,6 +699,7 @@ def create_learning_plan():
         plan_data = {"title": "Weekly Cloud Learning Plan", "raw": raw}
     except Exception as exc:  # noqa: BLE001
         return jsonify({"error": _friendly_error(exc)}), 500
+    plan_id = str(uuid.uuid4())
     now = datetime.now(timezone.utc).isoformat()
     plan_record = {
         "plan_id": plan_id,
