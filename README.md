@@ -100,7 +100,7 @@ All configuration is done via environment variables in `.env`:
 | Variable | Default | Description |
 |---|---|---|
 | `OPENAI_API_KEY` | *(required)* | Your API key — Google AI Studio or OpenAI |
-| `OPENAI_MODEL` | `gemini-1.5-flash` | Model to use. Google: `gemini-1.5-flash`, OpenAI: `gpt-4o-mini` |
+| `OPENAI_MODEL` | `gpt-4o-mini` | Model to use. Default: `gpt-4o-mini`. For Google: `gemini-1.5-flash` |
 | `OPENAI_BASE_URL` | *(unset)* | Optional OpenAI-compatible endpoint (e.g. Google/Groq) |
 | `SECRET_KEY` | `dev-secret-…` | Flask session secret — change for production |
 | `NOTES_DB_PATH` | `notes.db` | Path for the SQLite notes database |
