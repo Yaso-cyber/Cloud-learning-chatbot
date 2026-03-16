@@ -5,8 +5,6 @@ Computing**, **Cloud Security**, and **GRC (Governance, Risk &
 Compliance)** through natural conversation, quizzes, notes, PDF summaries,
 and personalised weekly learning plans.
 
-Live app: https://cloud-learning-chatbot.onrender.com
-
 ---
 
 ## ✨ Features
@@ -89,7 +87,8 @@ Get a free key at https://aistudio.google.com → **Get API key**
 python app.py
 ```
 
-Open your browser at **http://127.0.0.1:5000** and start learning! 🎉
+For local use, open **http://127.0.0.1:5000** in your browser.
+For shared/public access, use your deployed Render URL.
 
 ---
 
