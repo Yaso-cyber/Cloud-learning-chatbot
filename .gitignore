@@ -1,5 +1,6 @@
 # Environment variables — never commit your API keys!
 .env
+config.local.js
 
 # Python
 __pycache__/

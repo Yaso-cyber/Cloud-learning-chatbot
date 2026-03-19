@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudGuide Lite</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>CloudGuide Lite</h1>
+    <p>Simple cloud learning assistant with Gemini chat on Live Server.</p>
+  </header>
+
+  <main class="layout">
+    <section class="card">
+      <h2>Quick Help</h2>
+      <p>Pick a prompt or type your own question.</p>
+      <div class="quick-prompts">
+        <button class="prompt" data-prompt="What is cloud computing?">Cloud basics</button>
+        <button class="prompt" data-prompt="Explain IAM in simple words.">IAM</button>
+        <button class="prompt" data-prompt="What is shared responsibility model?">Shared responsibility</button>
+      </div>
+
+      <div id="chat" class="chat" aria-live="polite"></div>
+
+      <form id="chat-form" class="chat-form" autocomplete="off">
+        <input id="chat-input" type="text" placeholder="Ask a cloud question..." maxlength="300" />
+        <button type="submit">Send</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Mini Quiz</h2>
+      <p id="quiz-question">Press Start to begin.</p>
+      <div id="quiz-options" class="quiz-options"></div>
+      <p id="quiz-feedback" class="feedback"></p>
+      <button id="quiz-start">Start Quiz</button>
+      <p id="quiz-score" class="score">Score: 0 / 0</p>
+    </section>
+
+    <section class="card">
+      <h2>Notes</h2>
+      <p>Saved in your browser with localStorage.</p>
+      <textarea id="notes" rows="8" placeholder="Write your cloud study notes..."></textarea>
+      <div class="row">
+        <button id="save-notes">Save Notes</button>
+        <button id="clear-notes" class="ghost">Clear</button>
+      </div>
+      <p id="notes-status" class="muted"></p>
+    </section>
+  </main>
+
+  <script src="./config.local.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>
