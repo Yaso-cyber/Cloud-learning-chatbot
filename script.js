@@ -49,8 +49,11 @@ const conceptLibrary = [
 const chatEl = document.getElementById("chat");
 const formEl = document.getElementById("chat-form");
 const inputEl = document.getElementById("chat-input");
-const promptButtons = document.querySelectorAll(".prompt");
 const sendBtn = formEl.querySelector("button[type='submit']");
+const newChatBtn = document.getElementById("new-chat-btn");
+const templateButtons = document.querySelectorAll(".template-btn");
+const navButtons = document.querySelectorAll(".nav-btn");
+const panels = document.querySelectorAll(".panel");
 
 const GEMINI_MODELS = [
   "gemini-2.5-flash",
@@ -109,7 +112,7 @@ async function tryGeminiModel(model, apiKey, rawQuestion) {
       ],
       generationConfig: {
         temperature: 0.4,
-        maxOutputTokens: 350
+        maxOutputTokens: 800
       }
     })
   });
@@ -243,10 +246,29 @@ formEl.addEventListener("submit", async (event) => {
   }
 });
 
-promptButtons.forEach((btn) => {
+// ── New Chat ──────────────────────────────────────────────────────
+newChatBtn.addEventListener("click", () => {
+  chatEl.innerHTML = "";
+  inputEl.value = "";
+  addMessage("bot", "New conversation started. Ask me anything about cloud computing!");
+  inputEl.focus();
+});
+
+// ── Conversation templates ─────────────────────────────────────────
+templateButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
-    inputEl.value = btn.dataset.prompt || "";
-    formEl.requestSubmit();
+    inputEl.value = btn.dataset.template || "";
+    inputEl.focus();
+  });
+});
+
+// ── Sidebar navigation ────────────────────────────────────────────
+navButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    navButtons.forEach((b) => b.classList.remove("active"));
+    panels.forEach((p) => p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("panel-" + btn.dataset.panel).classList.add("active");
   });
 });
 
@@ -327,27 +349,3 @@ qStart.addEventListener("click", () => {
   }
   showQuestion();
 });
-
-const notesEl = document.getElementById("notes");
-const saveNotesEl = document.getElementById("save-notes");
-const clearNotesEl = document.getElementById("clear-notes");
-const notesStatus = document.getElementById("notes-status");
-const NOTES_KEY = "cloudguide-lite-notes";
-
-function loadNotes() {
-  const saved = localStorage.getItem(NOTES_KEY);
-  notesEl.value = saved || "";
-}
-
-saveNotesEl.addEventListener("click", () => {
-  localStorage.setItem(NOTES_KEY, notesEl.value);
-  notesStatus.textContent = "Notes saved locally.";
-});
-
-clearNotesEl.addEventListener("click", () => {
-  notesEl.value = "";
-  localStorage.removeItem(NOTES_KEY);
-  notesStatus.textContent = "Notes cleared.";
-});
-
-loadNotes();
