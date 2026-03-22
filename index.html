@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,23 +8,32 @@
   <link rel="icon" href="data:," />
   <link rel="stylesheet" href="./style.css" />
 </head>
+
 <body>
-  <header class="hero">
-    <h1>CloudGuide Lite</h1>
-    <p>Simple cloud learning assistant with Gemini chat on Live Server.</p>
-  </header>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h1>CloudGuide</h1>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-btn active" data-panel="chat">💬 Chat</button>
+      <button class="nav-btn" data-panel="quiz">🧠 Quiz</button>
+    </nav>
+  </aside>
 
-  <main class="layout">
-    <section class="card">
-      <h2>Quick Help</h2>
-      <p>Pick a prompt or type your own question.</p>
-      <div class="quick-prompts">
-        <button class="prompt" data-prompt="What is cloud computing?">Cloud basics</button>
-        <button class="prompt" data-prompt="Explain IAM in simple words.">IAM</button>
-        <button class="prompt" data-prompt="What is shared responsibility model?">Shared responsibility</button>
-      </div>
-
+  <!-- Main content -->
+  <div class="main">
+    <!-- Chat panel -->
+    <section id="panel-chat" class="panel active">
       <div id="chat" class="chat" aria-live="polite"></div>
+
+      <div id="templates" class="templates">
+        <button class="template-btn" data-template="What is ">What is ...</button>
+        <button class="template-btn" data-template="How does ">How does ...</button>
+        <button class="template-btn" data-template="Explain the difference between ">Difference between ...</button>
+        <button class="template-btn" data-template="Why is ">Why is ...</button>
+        <button class="template-btn" data-template="What are the benefits of ">Benefits of ...</button>
+      </div>
 
       <form id="chat-form" class="chat-form" autocomplete="off">
         <input id="chat-input" type="text" placeholder="Ask a cloud question..." maxlength="300" />
@@ -31,28 +41,21 @@
       </form>
     </section>
 
-    <section class="card">
-      <h2>Mini Quiz</h2>
-      <p id="quiz-question">Press Start to begin.</p>
-      <div id="quiz-options" class="quiz-options"></div>
-      <p id="quiz-feedback" class="feedback"></p>
-      <button id="quiz-start">Start Quiz</button>
-      <p id="quiz-score" class="score">Score: 0 / 0</p>
-    </section>
-
-    <section class="card">
-      <h2>Notes</h2>
-      <p>Saved in your browser with localStorage.</p>
-      <textarea id="notes" rows="8" placeholder="Write your cloud study notes..."></textarea>
-      <div class="row">
-        <button id="save-notes">Save Notes</button>
-        <button id="clear-notes" class="ghost">Clear</button>
+    <!-- Quiz panel -->
+    <section id="panel-quiz" class="panel">
+      <div class="quiz-card">
+        <h2>🧠 Mini Quiz</h2>
+        <p id="quiz-question">Press Start to begin.</p>
+        <div id="quiz-options" class="quiz-options"></div>
+        <p id="quiz-feedback" class="feedback"></p>
+        <button id="quiz-start">Start Quiz</button>
+        <p id="quiz-score" class="score">Score: 0 / 0</p>
       </div>
-      <p id="notes-status" class="muted"></p>
     </section>
-  </main>
+  </div>
 
   <script src="./config.local.js"></script>
   <script src="./script.js"></script>
 </body>
+
 </html>
