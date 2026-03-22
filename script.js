@@ -50,6 +50,7 @@ const chatEl = document.getElementById("chat");
 const formEl = document.getElementById("chat-form");
 const inputEl = document.getElementById("chat-input");
 const sendBtn = formEl.querySelector("button[type='submit']");
+const newChatBtn = document.getElementById("new-chat-btn");
 const templateButtons = document.querySelectorAll(".template-btn");
 const navButtons = document.querySelectorAll(".nav-btn");
 const panels = document.querySelectorAll(".panel");
@@ -111,7 +112,7 @@ async function tryGeminiModel(model, apiKey, rawQuestion) {
       ],
       generationConfig: {
         temperature: 0.4,
-        maxOutputTokens: 350
+        maxOutputTokens: 800
       }
     })
   });
@@ -245,20 +246,20 @@ formEl.addEventListener("submit", async (event) => {
   }
 });
 
+// ── New Chat ──────────────────────────────────────────────────────
+newChatBtn.addEventListener("click", () => {
+  chatEl.innerHTML = "";
+  inputEl.value = "";
+  addMessage("bot", "New conversation started. Ask me anything about cloud computing!");
+  inputEl.focus();
+});
+
 // ── Conversation templates ─────────────────────────────────────────
 templateButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
     inputEl.value = btn.dataset.template || "";
     inputEl.focus();
-    // Hide templates once the user picks one
-    document.getElementById("templates").style.display = "none";
   });
-});
-
-// Show templates again when chat input is emptied
-inputEl.addEventListener("input", () => {
-  const tpl = document.getElementById("templates");
-  tpl.style.display = inputEl.value.trim() === "" ? "" : "none";
 });
 
 // ── Sidebar navigation ────────────────────────────────────────────

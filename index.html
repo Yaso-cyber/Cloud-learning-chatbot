@@ -19,14 +19,15 @@
       <button class="nav-btn active" data-panel="chat">💬 Chat</button>
       <button class="nav-btn" data-panel="quiz">🧠 Quiz</button>
     </nav>
+    <div class="sidebar-footer">
+      <button id="new-chat-btn" class="new-chat-btn">✏️ New Chat</button>
+    </div>
   </aside>
 
   <!-- Main content -->
   <div class="main">
     <!-- Chat panel -->
     <section id="panel-chat" class="panel active">
-      <div id="chat" class="chat" aria-live="polite"></div>
-
       <div id="templates" class="templates">
         <button class="template-btn" data-template="What is ">What is ...</button>
         <button class="template-btn" data-template="How does ">How does ...</button>
@@ -34,6 +35,8 @@
         <button class="template-btn" data-template="Why is ">Why is ...</button>
         <button class="template-btn" data-template="What are the benefits of ">Benefits of ...</button>
       </div>
+
+      <div id="chat" class="chat" aria-live="polite"></div>
 
       <form id="chat-form" class="chat-form" autocomplete="off">
         <input id="chat-input" type="text" placeholder="Ask a cloud question..." maxlength="300" />
